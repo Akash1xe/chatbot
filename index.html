@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+    <title>Chat-bot</title>
+  </head>
+  <body>
+    <div class="chat-container">
+      
+      <div class="ai-chatBox">
+        <i class="fa-solid fa-brain"></i>
+        <div class="aiChatArea">
+          Hello ! how can i help you today?
+        </div>
+      </div>
+    </div>
+
+    <div class="prompt-area">
+      <input type="text" id="promptTextarea" placeholder="Ask me anything..." />
+      <button id="submit"><i class="ri-send-plane-2-fill"></i></button>
+      <button id="image_button"> <img src="imageForAi.jpg" > <input type="file" accept="images/*" hidden></button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
