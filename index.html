@@ -12,29 +12,50 @@
       referrerpolicy="no-referrer"
     />
     <link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-    rel="stylesheet"
-/>
-
-    <title>Chat-bot</title>
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <title>AI ChatBot - Your Personal Assistant</title>
   </head>
   <body>
+    <!-- Floating Background Icons -->
+    <div class="floating-icons">
+      <div class="floating-icon">👊</div>
+      <div class="floating-icon">🍎</div>
+      <div class="floating-icon">🚀</div>
+      <div class="floating-icon">⚡</div>
+      <div class="floating-icon">💎</div>
+      <div class="floating-icon">🎯</div>
+      <div class="floating-icon">🌟</div>
+      <div class="floating-icon">🔥</div>
+      <div class="floating-icon">💫</div>
+      <div class="floating-icon">🎨</div>
+    </div>
+
     <div class="chat-container">
-      
       <div class="ai-chatBox">
         <i class="fa-solid fa-brain"></i>
         <div class="aiChatArea">
-          Hello ! how can i help you today?
+          👋 Hello! I'm your AI assistant. How can I help you today?
         </div>
       </div>
     </div>
 
     <div class="prompt-area">
-      <input type="text" id="promptTextarea" placeholder="Ask me anything..." />
-      <button id="submit"><i class="ri-send-plane-2-fill"></i></button>
-      <button id="image_button"> <img src="imageForAi.jpg" > <input type="file" accept="images/*" hidden></button>
+      <input type="text" id="promptTextarea" placeholder="Type your message here..." />
+      <button id="submit" title="Send message">
+        <i class="ri-send-plane-2-fill"></i>
+      </button>
+      <button id="image_button" title="Upload image">
+        <img src="imageForAi.jpg" alt="Upload image">
+        <input type="file" accept="image/*" hidden>
+      </button>
     </div>
 
+    <!-- Load config for local development (ignored by git) -->
+    <script src="config.js" onerror="console.log('Config file not found - using production mode')"></script>
     <script src="script.js"></script>
   </body>
 </html>
