@@ -204,8 +204,19 @@ async function generateResponse(aiChatBox) {
 
   try {
     let response = await fetch(Api_Url, RequestOptions);
+    
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+    }
+    
     let data = await response.json();
-    let apiResponse = data.candidates[0].content.parts[0].text.replace().trim();
+    
+    // Check if the response has the expected structure
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0]) {
+      throw new Error('Invalid response structure from API');
+    }
+    
+    let apiResponse = data.candidates[0].content.parts[0].text.trim();
     console.log(apiResponse);
     
     // Remove loading box
@@ -218,7 +229,18 @@ async function generateResponse(aiChatBox) {
     // Append the new div to the chat container
     userChatContainer.appendChild(aiResponseBox);
   } catch (error) {
-    console.log(error);
+    console.error('Error in generateResponse:', error);
+    
+    // Remove loading box if it exists
+    if (loadingBox && userChatContainer.contains(loadingBox)) {
+      userChatContainer.removeChild(loadingBox);
+    }
+    
+    // Show error message to user
+    let errorHtml = `<i class="fa-solid fa-triangle-exclamation"></i>
+    <div class="aiChatArea">Sorry, I encountered an error: ${error.message}. Please try again.</div>`;
+    let errorBox = createUserBox(errorHtml, "ai-chatBox");
+    userChatContainer.appendChild(errorBox);
   } finally {
     userChatContainer.scrollTo({
       top: userChatContainer.scrollHeight,
