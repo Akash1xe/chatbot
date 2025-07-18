@@ -4,6 +4,7 @@ A beautiful, interactive AI chatbot with floating background animations powered 
 
 ## 🚀 Features
 
+
 - **AI-Powered Conversations**: Uses Google's Gemini AI for intelligent responses
 - **Image Support**: Upload and analyze images
 - **Floating Animations**: Beautiful GSAP-powered background animations

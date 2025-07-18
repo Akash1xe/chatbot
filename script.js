@@ -15,13 +15,48 @@ function initializeAPI() {
   // Try to get from window.CONFIG (loaded from config.js)
   if (window.CONFIG && window.CONFIG.API_KEY) {
     API_KEY = window.CONFIG.API_KEY;
+    console.log("✅ API configuration loaded from local config");
   } else {
-    // Fallback for production - you'll set this in Vercel environment variables
-    API_KEY = "YOUR_API_KEY_PLACEHOLDER";
-    console.warn("API key not found in config. Using placeholder.");
+    // For production, try to fetch from Vercel API endpoint
+    fetchProductionConfig();
+    return;
   }
   
   Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+}
+
+// Fetch API configuration from production endpoint
+async function fetchProductionConfig() {
+  try {
+    const response = await fetch('/config.js');
+    if (response.ok) {
+      const configScript = await response.text();
+      eval(configScript); // Execute the config script
+      
+      if (window.CONFIG && window.CONFIG.API_KEY) {
+        API_KEY = window.CONFIG.API_KEY;
+        Api_Url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        console.log("✅ API configuration loaded from production endpoint");
+      } else {
+        throw new Error("Invalid config from production endpoint");
+      }
+    } else {
+      throw new Error("Failed to fetch production config");
+    }
+  } catch (error) {
+    console.error("❌ Failed to load API configuration:", error);
+    showAPIErrorMessage();
+  }
+}
+
+// Show error message when API is not configured
+function showAPIErrorMessage() {
+  const errorHtml = `<i class="fa-solid fa-exclamation-triangle"></i>
+    <div class="aiChatArea" style="background: rgba(255, 0, 0, 0.1); color: #ff6b6b;">
+      ⚠️ API configuration error. Please check your environment variables in Vercel dashboard.
+    </div>`;
+  const errorBox = createUserBox(errorHtml, "ai-chatBox");
+  userChatContainer.appendChild(errorBox);
 }
 
 // Initialize floating icons animation
@@ -132,6 +167,13 @@ let user = {
 };
 
 async function generateResponse(aiChatBox) {
+  // Check if API is properly configured
+  if (!API_KEY || API_KEY === "YOUR_API_KEY_PLACEHOLDER") {
+    console.error("❌ API key not configured");
+    showAPIErrorMessage();
+    return;
+  }
+
   let text = document.querySelector(".aiChatArea");
   
   // Show loading state
